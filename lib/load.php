@@ -43,6 +43,11 @@ if ( ! function_exists( 'render_block_core_latest_comments' )
 if ( ! function_exists( 'render_block_core_latest_posts' ) ) {
 	require dirname( __FILE__ ) . '/../packages/block-library/src/latest-posts/index.php';
 }
+
+if ( ! function_exists( 'render_block_legacy_widget' ) ) {
+	require dirname( __FILE__ ) . '/../packages/block-library/src/legacy-widget/index.php';
+}
+
 if ( ! function_exists( 'render_block_core_shortcode' ) ) {
 	require dirname( __FILE__ ) . '/../packages/block-library/src/shortcode/index.php';
 }
