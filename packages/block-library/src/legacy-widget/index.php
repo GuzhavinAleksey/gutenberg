@@ -23,6 +23,31 @@ function render_block_legacy_widget( $attributes ) {
 	return ob_get_clean();
 }
 
+function render_widget_form( $attributes ) {
+	if ( ! isset( $attributes['class'] ) || ! isset( $attributes['instance'] ) ) {
+		return '';
+	}
+
+	$widget = $attributes['class'];
+	$instance = $attributes['instance'];
+
+	global $wp_widget_factory;
+
+    if ( ! isset( $wp_widget_factory->widgets[ $widget ] ) ) {
+        return 'error';
+    }
+
+    $widget_obj = $wp_widget_factory->widgets[ $widget ];
+    if ( ! ( $widget_obj instanceof WP_Widget ) ) {
+		return 'error';
+	}
+
+	$widget_obj->_set(-1);
+	ob_start();
+	$widget_obj->form( $instance );
+	return ob_get_clean();
+}
+
 /**
  * Register legacy widget block.
  */
@@ -38,7 +63,7 @@ function register_block_core_legacy_widget() {
 					'type' => 'object',
 				),
 			),
-			'render_callback' => 'render_block_legacy_widget',
+			'render_callback' => 'render_widget_form',
 		)
 	);
 }

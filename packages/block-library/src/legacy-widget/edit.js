@@ -4,7 +4,6 @@
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
-	Disabled,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
@@ -23,9 +22,7 @@ export default function LegacyWidgetEdit( { attributes } ) {
 				<PanelBody title={ __( 'Legacy Widget Settings' ) }>
 				</PanelBody>
 			</InspectorControls>
-			<Disabled>
-				<ServerSideRender block="core/legacy-widget" attributes={ attributes } />
-			</Disabled>
+			<ServerSideRender block="core/legacy-widget" attributes={ attributes } />
 		</Fragment>
 	);
 }
