@@ -52,4 +52,4 @@ if ( ! function_exists( 'render_block_core_shortcode' ) ) {
 	require dirname( __FILE__ ) . '/../packages/block-library/src/shortcode/index.php';
 }
 
-do_action( 'admin_print_scripts-widgets.php' );
+//do_action( 'admin_print_scripts-widgets.php' );

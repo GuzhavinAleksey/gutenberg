@@ -210,6 +210,8 @@ function gutenberg_init( $return, $post ) {
 		return false;
 	}
 
+	wp_maybe_load_widgets();
+
 	add_action( 'admin_enqueue_scripts', 'gutenberg_editor_scripts_and_styles' );
 	add_filter( 'screen_options_show_screen', '__return_false' );
 	add_filter( 'admin_body_class', 'gutenberg_add_admin_body_class' );
@@ -230,6 +232,8 @@ function gutenberg_init( $return, $post ) {
 	 * contenteditable fields.
 	 */
 	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+
+	do_action( 'admin_print_scripts-widgets.php' );
 
 	/*
 	 * Ensure meta box functions are available to third-party code;
