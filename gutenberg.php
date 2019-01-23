@@ -55,6 +55,16 @@ function the_gutenberg_project() {
 		<div id="metaboxes" style="display: none;">
 			<?php the_gutenberg_metaboxes(); ?>
 		</div>
+		<?php
+		/** This action is documented in wp-admin/admin-footer.php */
+		do_action( 'admin_print_footer_scripts-widgets.php' );
+
+		/** This action is documented in wp-admin/admin-footer.php */
+		do_action( 'admin_print_footer_scripts' );
+
+		/** This action is documented in wp-admin/admin-footer.php */
+		do_action( 'admin_footer-widgets.php' );
+		?>
 	</div>
 	<?php
 }
