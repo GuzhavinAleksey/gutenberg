@@ -22,6 +22,7 @@ export const PREFERENCES_DEFAULTS = {
  *  richEditingEnabled boolean        Whether rich editing is enabled or not
  */
 export const EDITOR_SETTINGS_DEFAULTS = {
+	availableLegacyWidgets: [],
 	alignWide: false,
 	colors: [
 		{

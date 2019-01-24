@@ -15,11 +15,11 @@
  * @return string Returns the post content with the legacy widget added.
  */
 function render_block_legacy_widget( $attributes ) {
-	if ( ! isset( $attributes['class'] ) || ! isset( $attributes['instance'] ) ) {
+	if ( ! isset( $attributes['identifier'] ) || ! isset( $attributes['instance'] ) ) {
 		return '';
 	}
 	ob_start();
-	the_widget( $attributes['class'], $attributes['instance'] );
+	the_widget( $attributes['identifier'], $attributes['instance'] );
 	return ob_get_clean();
 }
 
@@ -159,10 +159,10 @@ function register_block_core_legacy_widget() {
 		'core/legacy-widget',
 		array(
 			'attributes'      => array(
-				'class'             => array(
+				'identifier' => array(
 					'type' => 'string',
 				),
-				'instance'         => array(
+				'instance'   => array(
 					'type' => 'object',
 				),
 			),

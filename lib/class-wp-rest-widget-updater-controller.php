@@ -60,10 +60,10 @@ class WP_REST_Widget_Updater_Controller extends WP_REST_Controller {
 	 */
 	public function compute_new_widget( $request ) {
 		$json_request = $request->get_json_params();
-		if ( ! isset( $json_request['class'] ) ) {
+		if ( ! isset( $json_request['identifier'] ) ) {
 			return;
 		}
-		$widget = $json_request['class'];
+		$widget = $json_request['identifier'];
 		global $wp_widget_factory;
 
 		if ( ! isset( $wp_widget_factory->widgets[ $widget ] ) ) {
@@ -87,12 +87,15 @@ class WP_REST_Widget_Updater_Controller extends WP_REST_Controller {
 
 		$widget_obj->form( $instance );
 		// TODO: apply required filters.
+
+		$id_base = $widget_obj->id_base;
 		$form = ob_get_clean();
 
 		return rest_ensure_response(
 			array(
 				'instance' => $instance,
 				'form'     => $form,
+				'id_base'  => $id_base,
 			)
 		);
 	}
