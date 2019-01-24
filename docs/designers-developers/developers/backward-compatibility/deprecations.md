@@ -23,6 +23,10 @@ The Gutenberg project's deprecation policy is intended to support backward compa
 - The PHP function `gutenberg_filter_post_type_labels` has been removed.
 - The PHP function `gutenberg_can_edit_post_type` has been removed. Use [`use_block_editor_for_post_type`](https://developer.wordpress.org/reference/functions/use_block_editor_for_post_type/) instead.
 - The PHP function `gutenberg_can_edit_post` has been removed. Use [`use_block_editor_for_post`](https://developer.wordpress.org/reference/functions/use_block_editor_for_post/) instead.
+- The PHP function `gutenberg_remove_wpcom_markdown_support` has been removed.
+- The PHP function `gutenberg_bulk_post_updated_messages` has been removed.
+- The PHP function `gutenberg_kses_allowedtags` has been removed.
+- The PHP function `gutenberg_add_responsive_body_class` has been removed.
 
 ## 4.5.0
 - `Dropdown.refresh()` has been deprecated as the contained `Popover` is now automatically refreshed.
