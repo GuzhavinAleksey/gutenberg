@@ -3,9 +3,12 @@
  */
 import { Component, Fragment } from '@wordpress/element';
 import {
+	Button,
+	IconButton,
 	PanelBody,
 	Placeholder,
 	SelectControl,
+	Toolbar,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
@@ -30,12 +33,13 @@ class LegacyWidgetEdit extends Component {
 		};
 		this.switchToEdit = this.switchToEdit.bind( this );
 		this.switchToPreview = this.switchToPreview.bind( this );
+		this.changeWidget = this.changeWidget.bind( this );
 	}
 
 	render() {
 		const { attributes, availableLegacyWidgets, setAttributes } = this.props;
 		const { isPreview } = this.state;
-		const { instance } = attributes;
+		const { identifier } = attributes;
 
 		return (
 			<Fragment>
@@ -43,54 +47,60 @@ class LegacyWidgetEdit extends Component {
 					<PanelBody title={ __( 'Legacy Widget Settings' ) }>
 					</PanelBody>
 				</InspectorControls>
-				{ ! instance && (
+				{ ! identifier && (
 					<Placeholder
 						icon={ <BlockIcon icon="admin-customizer" /> }
 						label={ __( 'Legacy Widget' ) }
 					>
 						<SelectControl
 							label={ __( 'Select a legacy widget to display:' ) }
-							value={ attributes.identifier || 'none' }
+							value={ identifier || 'none' }
 							onChange={ ( value ) => setAttributes( {
 								instance: {},
 								identifier: value,
 							} ) }
 							options={ [ { value: 'none', label: 'Select widget' } ].concat(
-								availableLegacyWidgets.map( ( { identifier, name } ) => {
+								availableLegacyWidgets.map( ( widget ) => {
 									return {
-										value: identifier,
-										label: name,
+										value: widget.identifier,
+										label: widget.name,
 									};
 								} )
 							) }
 						/>
 					</Placeholder>
 				) }
-				{ instance && (
+				{ identifier && (
 					<BlockControls>
-						<div className="components-toolbar">
-							<button
+						<Toolbar>
+							<IconButton
+								className="components-icon-button components-toolbar__control"
+								label={ __( 'Change widget' ) }
+								onClick={ this.changeWidget }
+								icon="edit"
+							/>
+							<Button
 								className={ `components-tab-button ${ ! isPreview ? 'is-active' : '' }` }
 								onClick={ this.switchToEdit }
 							>
 								<span>{ __( 'Edit' ) }</span>
-							</button>
-							<button
+							</Button>
+							<Button
 								className={ `components-tab-button ${ isPreview ? 'is-active' : '' }` }
 								onClick={ this.switchToPreview }
 							>
 								<span>{ __( 'Preview' ) }</span>
-							</button>
-						</div>
+							</Button>
+						</Toolbar>
 					</BlockControls>
 				) }
-				{ instance && ! isPreview && (
+				{ identifier && ! isPreview && (
 					<WidgetEditHandler
 						identifier={ attributes.identifier }
 						instance={ attributes.instance }
 					/>
 				) }
-				{ instance && isPreview && (
+				{ identifier && isPreview && (
 					<ServerSideRender
 						block="core/legacy-widget"
 						attributes={ attributes }
@@ -98,6 +108,14 @@ class LegacyWidgetEdit extends Component {
 				) }
 			</Fragment>
 		);
+	}
+
+	changeWidget() {
+		this.switchToEdit();
+		this.props.setAttributes( {
+			instance: {},
+			identifier: undefined,
+		} );
 	}
 
 	switchToEdit() {

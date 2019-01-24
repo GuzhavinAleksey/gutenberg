@@ -1,9 +1,11 @@
 /**
  * WordPress dependencies
  */
-import { Component } from '@wordpress/element';
+import { Component, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
+import { withInstanceId } from '@wordpress/compose';
+import { Button } from '@wordpress/components';
 
 import WidgetEditDomManager from './WidgetEditDomManager';
 
@@ -19,7 +21,7 @@ class WidgetEditHandler extends Component {
 
 	componentDidMount() {
 		this.isStillMounted = true;
-		const { instance = {}, identifier } = this.props;
+		const { instance = {}, identifier, instanceId } = this.props;
 		if ( ! identifier ) {
 			return;
 		}
@@ -28,6 +30,8 @@ class WidgetEditHandler extends Component {
 			data: {
 				identifier,
 				instance,
+				// use negative ids to make sure the id does not exist on the database.
+				id_to_use: instanceId * -1,
 			},
 			method: 'POST',
 		} ).then(
@@ -37,6 +41,7 @@ class WidgetEditHandler extends Component {
 						form: response.form,
 						instance: response.instance,
 						idBase: response.id_base,
+						id: response.id,
 					} );
 				}
 			}
@@ -54,8 +59,8 @@ class WidgetEditHandler extends Component {
 	}
 
 	render() {
-		const { identifier } = this.props;
-		const { form, idBase } = this.state;
+		const { instanceId, identifier } = this.props;
+		const { id, idBase, form } = this.state;
 		if ( ! identifier ) {
 			return __( 'Not a valid widget.' );
 		}
@@ -63,13 +68,29 @@ class WidgetEditHandler extends Component {
 			return null;
 		}
 		return (
-			<WidgetEditDomManager
-				idBase={ idBase }
-				form={ form }
-			/>
+			<Fragment>
+				<WidgetEditDomManager
+					ref={ ( ref ) => {
+						this.widgetEditDomManagerRef = ref;
+					} }
+					widgetNumber={ instanceId * -1 }
+					id={ id }
+					idBase={ idBase }
+					form={ form }
+				/>
+				<Button
+					onClick={ () => {
+						if ( this.widgetEditDomManagerRef ) {
+							//window.alert( this.widgetEditDomManagerRef.retrieveUpdatedInstance() );
+						}
+					} }
+				>
+					{ __( 'Update' ) }
+				</Button>
+			</Fragment>
 		);
 	}
 }
 
-export default WidgetEditHandler;
+export default withInstanceId( WidgetEditHandler );
 

@@ -21,17 +21,24 @@ class WidgetEditDomManager extends Component {
 		return false;
 	}
 
+	retrieveUpdatedInstance() {
+		// var form = document.querySelector('#widget-37_categories-2 form');
+		//var data = new FormData(form);
+		// Array.from( data );
+		return 'dsfdsf';
+	}
+
 	render() {
-		const { idBase } = this.props;
+		const { id, idBase, widgetNumber } = this.props;
 		return (
 			<div className="widget open" ref={ this.containerRef }>
 				<div className="widget-inside">
 					<form method="post">
 						<div className="widget-content" dangerouslySetInnerHTML={ { __html: this.props.form } }>
 						</div>
-						<input type="hidden" name="widget-id" className="widget-id" value={ `${ idBase }--1` } />
+						<input type="hidden" name="widget-id" className="widget-id" value={ id } />
 						<input type="hidden" name="id_base" className="id_base" value={ idBase } />
-						<input type="hidden" name="widget_number" className="widget_number" value="-1" />
+						<input type="hidden" name="widget_number" className="widget_number" value={ widgetNumber } />
 						<input type="hidden" name="multi_number" className="multi_number" value="" />
 						<input type="hidden" name="add_new" className="add_new" value="" />
 					</form>

@@ -77,7 +77,9 @@ class WP_REST_Widget_Updater_Controller extends WP_REST_Controller {
 
 		$instance = isset( $json_request['instance'] ) ? $json_request['instance'] : array();
 
-		$widget_obj->_set( -1 );
+		$id_to_use = isset( $json_request['id_to_use'] ) ? $json_request['id_to_use'] : -1;
+
+		$widget_obj->_set( $id_to_use );
 		ob_start();
 
 		if ( isset( $json_request['instance_changes'] ) ) {
@@ -89,6 +91,7 @@ class WP_REST_Widget_Updater_Controller extends WP_REST_Controller {
 		// TODO: apply required filters.
 
 		$id_base = $widget_obj->id_base;
+		$id = $widget_obj->id;
 		$form = ob_get_clean();
 
 		return rest_ensure_response(
@@ -96,6 +99,7 @@ class WP_REST_Widget_Updater_Controller extends WP_REST_Controller {
 				'instance' => $instance,
 				'form'     => $form,
 				'id_base'  => $id_base,
+				'id'       => $id,
 			)
 		);
 	}
