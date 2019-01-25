@@ -86,12 +86,8 @@ function gutenberg_warn_classic_about_blocks() {
  * consume the notice and display it with the Notices API.
  *
  * @since 4.5.0
+ * @deprecated 5.0.0
  */
 function gutenberg_show_privacy_policy_help_text() {
-	if ( is_gutenberg_page() && has_action( 'edit_form_after_title', array( 'WP_Privacy_Policy_Content', 'notice' ) ) ) {
-		remove_action( 'edit_form_after_title', array( 'WP_Privacy_Policy_Content', 'notice' ) );
-
-		WP_Privacy_Policy_Content::notice( get_post() );
-	}
+	_deprecated_function( __FUNCTION__, '5.0.0' );
 }
-add_action( 'admin_notices', 'gutenberg_show_privacy_policy_help_text' );
